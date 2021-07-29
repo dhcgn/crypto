@@ -6,18 +6,20 @@ import (
 	"strings"
 )
 
+const versiontag = "CSv1"
+
 func fromCipherString(cipherString string) (cipherData, nonce, salt []byte, err error) {
 	splits := strings.Split(cipherString, ".")
 
-	cipherData, err = decodeStringWithNoPadding(splits[0])
+	cipherData, err = decodeStringWithNoPadding(splits[1])
 	if err != nil {
 		return nil, nil, nil, err
 	}
-	nonce, err = decodeStringWithNoPadding(splits[1])
+	nonce, err = decodeStringWithNoPadding(splits[2])
 	if err != nil {
 		return nil, nil, nil, err
 	}
-	salt, err = decodeStringWithNoPadding(splits[2])
+	salt, err = decodeStringWithNoPadding(splits[3])
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -34,7 +36,8 @@ func encodeStringWithNoPadding(s []byte) string {
 }
 
 func toCipherString(cipherData, nonce, salt []byte) string {
-	return fmt.Sprintf("%v.%v.%v",
+	return fmt.Sprintf("%v.%v.%v.%v",
+		versiontag,
 		encodeStringWithNoPadding(cipherData),
 		encodeStringWithNoPadding(nonce),
 		encodeStringWithNoPadding(salt))
@@ -46,11 +49,11 @@ func isCipherStringValid(input string) bool {
 	}
 
 	splits := strings.Split(input, ".")
-	if len(splits) != 3 {
+	if len(splits) != 4 {
 		return false
 	}
 
-	for _, v := range splits {
+	for _, v := range splits[1:] {
 		_, err := decodeStringWithNoPadding(v)
 		if err != nil {
 			return false

@@ -37,6 +37,7 @@ func TestEncrypt(t *testing.T) {
 				t.Errorf("Encrypt() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
+
 			if !isCipherStringValid(gotCipherstring) {
 				t.Errorf("Encrypt() = isCipherStringValid is false")
 			}
@@ -59,7 +60,7 @@ func TestDecrypt(t *testing.T) {
 			name: "No Error",
 			args: args{
 				password:     "my-secret-password",
-				cipherstring: "H6WA52PSPTFUHM5Y2DJNKO2PZESOTTIJC54FBLVXW4USFFUK.URUKDIY4UIWHZUOTAC5Q.MGV7W4OZKCGWJITQJQISRIXPVI",
+				cipherstring: "CSv1.443MMQSEWDPHEYKVS42FWJN633PS4EQIOFXDGMJOM2ON4ACJ.CIG44UL5BXWJU6JSW2BQ.KIORDLXAIJAT7NCTJHWYCE273Q",
 			},
 			wantPlain: []byte("my-secret-data"),
 		},
