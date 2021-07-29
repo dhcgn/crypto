@@ -10,6 +10,12 @@ import (
 	"crypto/cipher"
 )
 
+// Encrypt encrypts a plaintext using the password.
+// Uses AES-256-GCM (an authenticated encryption mode)
+// to encrypt and decrypt data, password will be derived
+// with PBKDF2 and 100.000 iterations. Because of this
+// high iteration count the encryption and decryption process
+// takes a minimum of around 200ms.
 func Encrypt(password string, plaintext []byte) (cipherstring string, err error) {
 	hash, salt := hash.HashPasswordWithPbkdf2(password)
 
@@ -41,6 +47,12 @@ func Encrypt(password string, plaintext []byte) (cipherstring string, err error)
 	return toCipherString(cipherData, nonce, salt), nil
 }
 
+// Decrypt decrypts a ciphertext from the cipherstring using the password.
+// Uses AES-256-GCM (an authenticated encryption mode)
+// to encrypt and decrypt data, password will be derived
+// with PBKDF2 and 100.000 iterations. Because of this
+// high iteration count the encryption and decryption process
+// takes a minimum of around 200ms.
 func Decrypt(password string, cipherstring string) (plain []byte, err error) {
 	ciphertext, nonce, salt, err := fromCipherString(cipherstring)
 	if err != nil {

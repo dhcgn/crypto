@@ -9,6 +9,9 @@ import (
 const versiontag = "CSv1"
 
 func fromCipherString(cipherString string) (cipherData, nonce, salt []byte, err error) {
+	if !isCipherStringValid(cipherString) {
+		return nil, nil, nil, fmt.Errorf("invalid cipher string: %v", cipherString)
+	}
 	splits := strings.Split(cipherString, ".")
 
 	cipherData, err = decodeStringWithNoPadding(splits[1])

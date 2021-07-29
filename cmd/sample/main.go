@@ -18,7 +18,7 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(cipherstring, "\nDuration", time.Since(start))
+	fmt.Println("Encrypt() =", cipherstring, "\nDuration", time.Since(start))
 
 	fmt.Println("--- Decrypt")
 
@@ -27,6 +27,6 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(string(encrypted), "\nDuration", time.Since(start))
+	fmt.Println("Decrypt() =", string(encrypted), "\nDuration", time.Since(start))
 
 }
