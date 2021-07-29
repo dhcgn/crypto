@@ -3,10 +3,7 @@ package simple
 import (
 	"crypto/aes"
 	"crypto/rand"
-	"encoding/base32"
-	"fmt"
 	"io"
-	"strings"
 
 	"github.com/dhcgn/crypto/hash"
 
@@ -42,33 +39,6 @@ func Encrypt(password string, plaintext []byte) (cipherstring string, err error)
 	//
 
 	return toCipherString(cipherData, nonce, salt), nil
-}
-
-func toCipherString(cipherData, nonce, salt []byte) string {
-	toBase32 := func(data []byte) string {
-		return base32.StdEncoding.WithPadding(base32.NoPadding).EncodeToString(data)
-	}
-
-	return fmt.Sprintf("%v.%v.%v", toBase32(cipherData), toBase32(nonce), toBase32(salt))
-}
-
-func fromCipherString(cipherString string) (cipherData, nonce, salt []byte, err error) {
-	splits := strings.Split(cipherString, ".")
-
-	cipherData, err = base32.StdEncoding.WithPadding(base32.NoPadding).DecodeString(splits[0])
-	if err != nil {
-		return nil, nil, nil, err
-	}
-	nonce, err = base32.StdEncoding.WithPadding(base32.NoPadding).DecodeString(splits[1])
-	if err != nil {
-		return nil, nil, nil, err
-	}
-	salt, err = base32.StdEncoding.WithPadding(base32.NoPadding).DecodeString(splits[2])
-	if err != nil {
-		return nil, nil, nil, err
-	}
-
-	return
 }
 
 func Decrypt(password string, cipherstring string) (plain []byte, err error) {

@@ -7,20 +7,20 @@ import (
 	"golang.org/x/crypto/pbkdf2"
 )
 
-const (
-	iter   = 100_000
-	keyLen = 32
+var (
+	Iteration = 100_000
+	keyLen    = 32
 )
 
 func HashPasswordWithPbkdf2(password string) ([]byte, []byte) {
 	salt := make([]byte, 16)
 	rand.Read(salt)
 
-	hash := pbkdf2.Key([]byte(password), salt, iter, keyLen, sha512.New)
+	hash := pbkdf2.Key([]byte(password), salt, Iteration, keyLen, sha512.New)
 	return hash, salt
 }
 
 func HashPasswordWithPbkdf2WithSalt(password string, salt []byte) []byte {
-	hash := pbkdf2.Key([]byte(password), salt, iter, keyLen, sha512.New)
+	hash := pbkdf2.Key([]byte(password), salt, Iteration, keyLen, sha512.New)
 	return hash
 }
