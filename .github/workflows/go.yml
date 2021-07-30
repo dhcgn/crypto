@@ -23,3 +23,19 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    - name: Test Coverage
+      run: | 
+       go test -coverprofile coverage.out github.com/dhcgn/crypto
+       go tool cover -html=coverage.out -o coverage.html
+       
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.2.2
+      with:
+        name: Coverage
+        path: coverage.*
+   
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}       
