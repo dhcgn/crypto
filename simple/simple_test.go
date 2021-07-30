@@ -64,6 +64,14 @@ func TestDecrypt(t *testing.T) {
 			},
 			wantPlain: []byte("my-secret-data"),
 		},
+		{
+			name: "Error",
+			args: args{
+				password:     "my-secret-password",
+				cipherstring: "WRONG FORMAT",
+			},
+			wantErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
