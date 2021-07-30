@@ -26,16 +26,13 @@ jobs:
 
     - name: Test Coverage
       run: | 
-       go test -coverprofile coverage.out  ./...
-       go tool cover -html=coverage.out -o coverage.html
+       go test "./..." -coverprofile="sonar_coverage.out" -covermode=count -json > sonar_report.json
+       go tool cover -html=sonar_coverage.out -o coverage.html
        
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.2.2
       with:
         name: Coverage
-        path: coverage.*
-   
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v1
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}       
+        path: |
+          coverage.*
+          sonar_*
