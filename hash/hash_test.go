@@ -28,10 +28,10 @@ func TestHashPasswordWithPbkdf2(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			gotHash, gotSalt := HashPasswordWithPbkdf2(tt.args.password)
 			if len(gotHash) != tt.wantHashLength {
-				t.Errorf("HashPasswordWithPbkdf2() gotHash = %v, want %v", len(gotHash), tt.wantHashLength)
+				t.Errorf("HashPasswordWithPbkdf2() gotHashLength = %v, want %v", len(gotHash), tt.wantHashLength)
 			}
 			if len(gotSalt) != tt.wantSaltLength {
-				t.Errorf("HashPasswordWithPbkdf2() gotSalt = %v, want %v", len(gotSalt), tt.wantSaltLength)
+				t.Errorf("HashPasswordWithPbkdf2() gotSaltLength = %v, want %v", len(gotSalt), tt.wantSaltLength)
 			}
 		})
 	}
