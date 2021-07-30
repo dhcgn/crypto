@@ -47,7 +47,14 @@ func TestHashPasswordWithPbkdf2WithSalt(t *testing.T) {
 		args     args
 		wantHash []byte
 	}{
-		// TODO: Add test cases.
+		{
+			name: "Hash",
+			args: args{
+				password: "password",
+				salt:     []byte("salt"),
+			},
+			wantHash: []byte{245, 209, 112, 34, 201, 106, 244, 108, 10, 29, 196, 154, 88, 187, 230, 84, 162, 142, 152, 16, 72, 131, 228, 175, 77, 233, 116, 205, 162, 199, 65, 34},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
